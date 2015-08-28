@@ -1,0 +1,5 @@
+---
+# vars file for mysquser=root
+user: "root"
+password: "root"
+db_name: "aparna"

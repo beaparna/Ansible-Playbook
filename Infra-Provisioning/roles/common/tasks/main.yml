@@ -1,0 +1,13 @@
+---
+#These tasks install common packages
+- name: Install vim wget gcc etc
+  apt: name={{ item }} state=present
+  with_items:
+  - vim
+  - wget
+  - make
+  - bc
+  - gcc
+  - thunderbird
+  - pidgin
+  - wine

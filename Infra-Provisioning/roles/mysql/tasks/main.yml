@@ -1,0 +1,26 @@
+---
+# These task will install mysql
+
+- name: Install MySQL packages
+  sudo: yes
+  apt:  update_cache=yes
+
+- name: Install MySQL packages
+  sudo: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - mysql-client
+    - mysql-server
+    - python-mysqldb
+- name: Start MySQL service
+  sudo: yes
+  service: name=mysql state=started enabled=true
+
+- name: Create a database
+- sudo: yes
+- mysql_db: name={{ db_name }}
+            state=present
+
+- name: Create a root user
+  sudo: yes
+  mysql_user: name={{ user }} password={{ password }} priv=*.*:ALL,GRANT

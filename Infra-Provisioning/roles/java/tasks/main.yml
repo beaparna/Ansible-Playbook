@@ -1,0 +1,25 @@
+---
+#These tasks install java
+- name: Create directory
+  file: path={{ java_dir }} state=directory mode=0755
+
+- name: download java
+  get_url: url={{ java8 }} 
+           dest={{ java_dir }}
+- name: Extract archive
+  unarchive: src={{ java_dir }}/jdk-8u60-ea-bin-b25-linux-x64-21_jul_2015.tar.gz
+             dest={{ java_dir }}
+             copy=no
+- name: Delete java tar file 
+  file: dest={{ java_dir }}/jdk-8u60-ea-bin-b25-linux-x64-21_jul_2015.tar.gz state=absent
+
+- name: Rename jdk directory
+  shell: mv {{ java_dir }}/jdk* {{ java_dir }}/jdk8
+
+- name: Update alternatives
+  command: update-alternatives --install "/usr/bin/{{ item }}" "{{ item }}" "{{ java_dir }}/jdk8/bin/{{ item }}" 1
+  with_items: 
+  - java
+  - javac
+  - javah
+  - javaws
